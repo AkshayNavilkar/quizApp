@@ -10,6 +10,7 @@ import com.quiz.app.question.repository.QuestionRepository;
 import com.quiz.app.quiz.model.Quiz;
 import com.quiz.app.quiz.repository.QuizRepository;
 import com.quiz.app.quiz.service.QuizService;
+import com.quiz.app.user.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -90,6 +91,8 @@ public class QuizControllerTest {
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String outputToJson = response.getContentAsString();
+        Quiz outputJson = new ObjectMapper().readValue(outputToJson, Quiz.class);
+        assertNotSame(outputJson.getQuiz_name(), quiz.getQuiz_name());
         assertNotSame(outputToJson,inputToJson);
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
@@ -108,6 +111,8 @@ public class QuizControllerTest {
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
         String outputToJson = response.getContentAsString();
+        Quiz outputJson = new ObjectMapper().readValue(outputToJson, Quiz.class);
+        assertNotSame(outputJson.getQuiz_name(), quiz.getQuiz_name());
         assertNotSame(outputToJson,inputToJson);
         assertEquals(HttpStatus.OK.value(), response.getStatus());
     }
@@ -124,6 +129,8 @@ public class QuizControllerTest {
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String expectedJson = this.mapToJson(quiz);
         String outputtoJson = mvcResult.getResponse().getContentAsString();
+        Quiz outputJson = new ObjectMapper().readValue(outputtoJson, Quiz.class);
+        assertNotSame(outputJson.getQuiz_id().toString(), quiz.getQuiz_id().toString());
         assertNotSame(outputtoJson,expectedJson);
     }
 }
